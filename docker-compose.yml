@@ -1,0 +1,62 @@
+
+services:
+  db:
+    image: postgres:15
+    container_name: tunycewifi-db
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - tunyce-net
+
+  backend:
+    build: ./backend
+    container_name: tunycewifi-backend
+    env_file:
+      - ./backend/.env
+    networks:
+      tunyce-net:
+      tunyce-macvlan:
+        ipv4_address: 192.168.100.158
+    depends_on:
+      db:
+        condition: service_healthy
+
+  radius:
+    build: ./radius
+    container_name: tunycewifi-radius
+    env_file:
+      - ./backend/.env
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      tunyce-net:
+      tunyce-macvlan:
+        ipv4_address: 192.168.100.159
+
+  frontend:
+    build: ./frontend
+    container_name: tunycewifi-frontend
+    networks:
+      tunyce-macvlan:
+        ipv4_address: 192.168.100.160
+
+networks:
+  tunyce-net:
+    driver: bridge
+
+  tunyce-macvlan:
+    driver: macvlan
+    driver_opts:
+      parent: pnet0
+    ipam:
+      config:
+        - subnet: 192.168.100.0/24
+          gateway: 192.168.100.1

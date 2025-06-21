@@ -1,0 +1,6 @@
+client docker-network {
+  ipaddr = 172.18.0.0/16
+  require_message_authenticator = yes
+  secret = testing123
+}
+

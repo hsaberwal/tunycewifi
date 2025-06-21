@@ -1,0 +1,22 @@
+cat <<EOF > .gitignore
+# Python
+__pycache__/
+*.pyc
+
+# Node.js
+node_modules/
+dist/
+
+# Docker
+*.log
+.env
+.env.*
+
+# System
+.DS_Store
+*.swp
+
+# VSCode
+.vscode/
+EOF
+

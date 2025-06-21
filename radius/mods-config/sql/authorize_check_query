@@ -1,0 +1,6 @@
+SELECT
+  'Cleartext-Password', ':=', 'wifi'
+FROM sessions
+WHERE mac_address = '%{User-Name}'
+  AND start_time >= (now() - interval '15 minutes');
+

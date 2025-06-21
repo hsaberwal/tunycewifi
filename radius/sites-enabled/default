@@ -1,0 +1,32 @@
+server default {
+  listen {
+    type = auth
+    ipaddr = *
+    port = 1812
+  }
+
+  listen {
+    type = acct
+    ipaddr = *
+    port = 1813
+  }
+
+  authorize {
+    sql
+    pap
+    authorize_mac_check
+  }
+
+  authenticate {
+    Auth-Type PAP {
+      pap
+    }
+  }
+
+  post-auth {
+    update reply {
+      Session-Timeout := 900
+    }
+  }
+}
+

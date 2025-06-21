@@ -1,0 +1,7 @@
+exec authorize_mac_check {
+    wait = yes
+    input_pairs = request
+    program = "/etc/freeradius/scripts/check_mac.sh %{Calling-Station-Id}"
+    output_pairs = reply
+}
+
