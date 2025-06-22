@@ -34,3 +34,11 @@ CREATE TABLE IF NOT EXISTS sessions (
   router_id INTEGER REFERENCES routers(id),
   ad_id INTEGER REFERENCES ads(id)
 );
+
+CREATE TABLE IF NOT EXISTS reject_logs (
+  id SERIAL PRIMARY KEY,
+  mac_address TEXT NOT NULL,
+  timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  reason TEXT
+);
+

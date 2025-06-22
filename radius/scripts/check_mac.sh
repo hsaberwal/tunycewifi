@@ -10,6 +10,6 @@ if echo "$RESULT" | grep -q '"status":"active"'; then
   exit 0
 else
   echo "Auth-Type := Reject"
-  exit 0
+  exit 1
 fi
 

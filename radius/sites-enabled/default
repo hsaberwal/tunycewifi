@@ -13,19 +13,26 @@ server default {
 
   authorize {
     sql
-    pap
+#    pap
     authorize_mac_check
   }
 
   authenticate {
-    Auth-Type PAP {
-      pap
-    }
+#    Auth-Type PAP {
+#      pap
+#    }
   }
 
   post-auth {
     update reply {
       Session-Timeout := 900
+    }
+
+    Post-Auth-Type REJECT {
+      update reply {
+        Reply-Message := "Access Denied"
+      }
+      reject_logger
     }
   }
 }

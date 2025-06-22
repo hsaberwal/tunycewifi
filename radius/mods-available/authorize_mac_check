@@ -1,0 +1,7 @@
+exec authorize_mac_check {
+    wait = yes
+    input_pairs = request
+    shell_escape = yes
+    program = "/radius/scripts/check_mac.sh %{Calling-Station-Id}"
+}
+

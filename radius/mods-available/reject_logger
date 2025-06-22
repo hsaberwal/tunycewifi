@@ -1,0 +1,7 @@
+exec reject_logger {
+    wait = yes
+    input_pairs = request
+    shell_escape = yes
+    program = "/etc/freeradius/scripts/log_reject.sh %{User-Name} %{reply:Reply-Message}"
+}
+

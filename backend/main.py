@@ -45,6 +45,9 @@ SESSION_DURATION_MINUTES = config.get("session_duration_minutes", 15)
 class AuthRequest(BaseModel):
     mac_address: str
 
+class RejectLogRequest(BaseModel):
+    mac_address: str
+    reason: str
 
 @app.post("/api/authorize")
 async def authorize(auth: AuthRequest):
@@ -195,6 +198,29 @@ def delete_session(
         if deleted == 0:
             raise HTTPException(status_code=404, detail="Session not found")
         return {"status": "deleted", "mac_address": mac_address}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    
+
+@app.post("/api/log_reject")
+async def log_reject(log: RejectLogRequest):
+    if not log.mac_address or not log.reason:
+        raise HTTPException(status_code=400, detail="MAC address and reason required")
+
+    try:
+        conn = psycopg2.connect(DATABASE_URL)
+        cur = conn.cursor()
+
+        cur.execute("""
+            INSERT INTO reject_logs (mac_address, reason)
+            VALUES (%s, %s)
+        """, (log.mac_address, log.reason))
+
+        conn.commit()
+        cur.close()
+        conn.close()
+
+        return {"status": "logged"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
