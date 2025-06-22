@@ -13,6 +13,6 @@ sql {
 
   sql_user_name = "%{User-Name}"
  
-  authorize_check_query = "SELECT 1, '%{SQL-User-Name}', 'Cleartext-Password', 'wifi', ':=' FROM sessions WHERE mac_address = '%{SQL-User-Name}'"
+  authorize_check_query = "SELECT 1, '%{SQL-User-Name}', 'Auth-Type','Accept', ':=' FROM sessions WHERE mac_address = '%{SQL-User-Name}'"
 }
 

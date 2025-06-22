@@ -13,14 +13,14 @@ server default {
 
   authorize {
     sql
-#    pap
+    pap
     authorize_mac_check
   }
 
   authenticate {
-#    Auth-Type PAP {
-#      pap
-#    }
+    Auth-Type Accept {
+      ok
+    }
   }
 
   post-auth {

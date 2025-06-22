@@ -1,9 +1,9 @@
-CREATE TABLE IF NOT EXISTS ads (
+CREATE TABLE ads (
   id SERIAL PRIMARY KEY,
-  file_path TEXT,
+  filename TEXT NOT NULL,
   weight INTEGER DEFAULT 1,
-  duration INTEGER,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  uploaded_by TEXT,
+  uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 CREATE TABLE IF NOT EXISTS matatus (
@@ -32,7 +32,11 @@ CREATE TABLE IF NOT EXISTS sessions (
   end_time TIMESTAMP,
   device_type TEXT,
   router_id INTEGER REFERENCES routers(id),
-  ad_id INTEGER REFERENCES ads(id)
+  ad_filename TEXT,
+  ip_address TEXT,
+  ad_watch_timestamp TIMESTAMP,
+  ad_completion_timestamp TIMESTAMP,
+  watched_full_ad BOOLEAN DEFAULT false
 );
 
 CREATE TABLE IF NOT EXISTS reject_logs (

@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, useSearchParams } from 'react-router-dom';
 import SessionStatus from './components/SessionStatus';
 import AdminPage from './components/AdminPage';
+import RejectLogsPage from "./pages/RejectLogsPage";
+import ConnectedPage from "./pages/ConnectedPage";
 
 const HomePage = () => {
   const [searchParams] = useSearchParams();
@@ -22,7 +24,9 @@ const App = () => {
   return (
       <Routes>
         <Route path="/" element={<HomePage />} />
-	<Route path="/admin" element={<AdminPage />} />
+	      <Route path="/admin" element={<AdminPage />} />
+        <Route path="/admin/reject-logs" element={<RejectLogsPage />} />
+        <Route path="/connected" element={<ConnectedPage />} />
       </Routes>
   );
 };

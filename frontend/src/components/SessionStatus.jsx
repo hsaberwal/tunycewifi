@@ -35,17 +35,14 @@ const SessionStatus = ({ macAddress }) => {
     checkStatus();
   }, [macAddress]);
 
-  // Start 30s countdown
   const startAdCountdown = () => {
     setCountdown(30);
     setAuthorizing(true);
   };
 
-  // Countdown effect
   useEffect(() => {
     if (countdown === null) return;
     if (countdown === 0) {
-      // Countdown complete, authorize session
       authorizeSession();
       return;
     }
@@ -67,8 +64,8 @@ const SessionStatus = ({ macAddress }) => {
 
       const data = await res.json();
       if (data.status === "authorized") {
-        setStatus("active");
-        setMinutesRemaining(15); // Reset session timer UI
+        // Redirect to MikroTik login to trigger re-auth
+        window.location.href = `http://192.168.88.1/login?username=${macAddress}&password=wifi`;
       } else {
         setStatus("error");
       }
@@ -79,7 +76,6 @@ const SessionStatus = ({ macAddress }) => {
     setCountdown(null);
   };
 
-  // Render logic
   if (status === "active") {
     return <p>You have {minutesRemaining} minute(s) remaining on your session.</p>;
   }
