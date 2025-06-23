@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS sessions (
   router_id INTEGER REFERENCES routers(id),
   ad_filename TEXT,
   ip_address TEXT,
+  device_info JSONB,
   ad_watch_timestamp TIMESTAMP,
   ad_completion_timestamp TIMESTAMP,
   watched_full_ad BOOLEAN DEFAULT false
@@ -44,5 +45,15 @@ CREATE TABLE IF NOT EXISTS reject_logs (
   mac_address TEXT NOT NULL,
   timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   reason TEXT
+);
+
+CREATE TABLE IF NOT EXISTS ad_views (
+  id SERIAL PRIMARY KEY,
+  mac_address TEXT NOT NULL,
+  ad_filename TEXT NOT NULL,
+  ad_id INTEGER,
+  router_ip TEXT,
+  user_agent_data TEXT,
+  viewed_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 

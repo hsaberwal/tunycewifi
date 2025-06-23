@@ -27,6 +27,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    volumes:
+      - ./backend/videos:/app/videos
 
   radius:
     build: ./radius
@@ -47,6 +49,8 @@ services:
     networks:
       tunyce-macvlan:
         ipv4_address: 192.168.100.160
+    volumes:
+      - ./backend/videos:/usr/share/nginx/html/ads
 
 networks:
   tunyce-net:

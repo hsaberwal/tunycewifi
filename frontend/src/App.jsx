@@ -1,9 +1,11 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, useSearchParams } from 'react-router-dom';
-import SessionStatus from './components/SessionStatus';
-import AdminPage from './components/AdminPage';
+import { BrowserRouter as Router, Routes, Route, useSearchParams } from 'react-router-dom';
+import SessionStatus from './components/SessionStatus.jsx';
+import AdminPage from './pages/AdminPage';
 import RejectLogsPage from "./pages/RejectLogsPage";
 import ConnectedPage from "./pages/ConnectedPage";
+import AdminLoginPage from './pages/AdminLoginPage';
+import AdPlaybackPage from "./pages/AdPlaybackPage";
 
 const HomePage = () => {
   const [searchParams] = useSearchParams();
@@ -22,14 +24,14 @@ const HomePage = () => {
 
 const App = () => {
   return (
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-	      <Route path="/admin" element={<AdminPage />} />
-        <Route path="/admin/reject-logs" element={<RejectLogsPage />} />
-        <Route path="/connected" element={<ConnectedPage />} />
-      </Routes>
+    <Routes>
+      <Route path="/" element={<AdPlaybackPage />} />
+      <Route path="/admin" element={<AdminPage />} />
+      <Route path="/admin/reject-logs" element={<RejectLogsPage />} />
+      <Route path="/connected" element={<ConnectedPage />} />
+      <Route path="/admin-login" element={<AdminLoginPage />} />
+    </Routes>
   );
 };
 
 export default App;
-
