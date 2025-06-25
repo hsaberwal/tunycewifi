@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Redirecting...</title>
+    <meta http-equiv="refresh" content="0; url=http://192.168.100.160/?mac=$(mac)" />
+    <script type="text/javascript">
+      window.onload = function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const mac = urlParams.get('mac') || '$(mac)'; // fallback if MikroTik failed to parse
+        if (mac && mac !== '$(mac)') {
+          window.location.href = 'http://192.168.100.160/?mac=' + encodeURIComponent(mac);
+        } else {
+          document.body.innerHTML = '<p>Error: MAC address not provided</p>';
+        }
+      };
+    </script>
+  </head>
+  <body>
+    <p>Redirecting to portal...</p>
+  </body>
+</html>
+
